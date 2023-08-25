@@ -18,12 +18,60 @@ module.exports = () => {
       path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        filename: 'index.html',
+        chunks: ['main']
+      }),
+      new HtmlWebpackPlugin({
+        template: './src/install.html',
+        filename: 'install.html',
+        chunks: ['install']
+      }),
+      new WebpackPwaManifest({
+        name: 'Restaurant Reviews',
+        short_name: 'Restaurant Reviews',
+        description: 'Restaurant Reviews App',
+        background_color: '#ffffff',
+        theme_color: '#ffffff',
+        crossorigin: 'use-credentials',
+        icons: [
+          {
+            src: path.resolve('src/img/restaurant-icon.png'),
+            sizes: [96, 128, 192, 256, 384, 512] 
+          },
+          {
+            src: path.resolve('src/img/restaurant-icon.png'),
+            size: '1024x1024'
+          },
+          {
+            src: path.resolve('src/img/restaurant-icon.png'),
+            size: '1024x1024',
+            purpose: 'maskable'
+          }
+        ]
+      }),
+      new InjectManifest({
+        swSrc: './src-sw.js',
+        swDest: 'sw.js',
+      }),
       
     ],
 
     module: {
       rules: [
-        
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader',
+          },
+        },
+
       ],
     },
   };
