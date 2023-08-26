@@ -20,35 +20,31 @@ module.exports = () => {
     plugins: [
       new HtmlWebpackPlugin({
         template: "./index.html",
-        filename: "index.html",
-        chunks: ["main"],
+        title: "JATE",
+        favicon: "./src/images/favicon.png",
+      }),
+      new InjectManifest({
+        swSrc: "./src-sw.js",
+        swDest: "src-sw.js",
       }),
       new WebpackPwaManifest({
-        name: "JATE",
-        short_name: "Just Another Text Editor",
+        fingerprints: false,
+        inject: true,
+        name: "Just Another Text Editor",
+        short_name: "JATE",
         description:
           "A simple text editor that saves your content to IndexedDB",
         background_color: "#ffffff",
         theme_color: "#ffffff",
+        start_url: "/",
+        publicPath: "/",
         icons: [
           {
-            src: path.resolve("./src/images/logo.png"),
+            src: path.resolve("src/images/logo.png"),
             sizes: [96, 128, 192, 256, 384, 512],
-          },
-          {
-            src: path.resolve("./src/images/logo.png"),
-            size: "1024x1024",
-          },
-          {
-            src: path.resolve("./src/images/logo.png"),
-            size: "1024x1024",
-            purpose: "maskable",
+            destination: path.join('assets', 'icons'),
           },
         ],
-      }),
-      new InjectManifest({
-        swSrc: "./src-sw.js",
-        swDest: "sw.js",
       }),
     ],
 
@@ -59,10 +55,14 @@ module.exports = () => {
           use: ["style-loader", "css-loader"],
         },
         {
-          test: /\.js$/,
+          test: /\.m?js$/,
           exclude: /node_modules/,
           use: {
             loader: "babel-loader",
+            options: {
+              presets: ["@babel/preset-env"],
+              plugins: ["@babel/plugin-proposal-object-rest-spread", "@babel/plugin-transform-runtime"],
+            }
           },
         },
       ],
