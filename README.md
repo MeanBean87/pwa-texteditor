@@ -1,4 +1,3 @@
-
 # J.A.T.E - Just Another Text Editor
 
 ## Description
@@ -9,9 +8,9 @@ This is a basic text editor that uses IndexedDB to store and update displayed te
 
 Desktop Landing Page:
 
-![1693240898204](image/README/1693240898204.png)![1691813211305](image/README/1691813211305.png)
+![1693240898204](image/README/1693240898204.png)
 
-Mobile Landing Page:
+PWA Locally Installed Landing Page:
 
 ![1691813187659](image/README/1691813187659.png)
 
